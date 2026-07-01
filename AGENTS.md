@@ -1,6 +1,58 @@
 # AGENTS.md
 
-This is the GitHub CLI (`gh`), a command-line tool for interacting with GitHub. The module path is `github.com/cli/cli/v2`.
+This is the **GitHub CLI Internationalization (i18n) & Localization (l10n) Framework** — a fork of the official [GitHub CLI (`cli/cli`)](https://github.com/cli/cli).
+
+**Module path:** `github.com/cli/cli/v2`
+
+## Project Status
+
+| Aspect | Detail |
+|---|---|
+| Phase | Technical Task 001 — Project initialization (done) |
+| Next | Technical Task 002 — i18n framework & core infrastructure |
+| Default branch | `develop` |
+| Upstream mirror | `trunk` (syncs from `cli/cli`) |
+| Active branch | `develop` |
+
+## Fork Conventions
+
+- **Do NOT modify** source code in `cmd/`, `pkg/`, `api/`, `internal/`, or any Go files — all functional changes belong in Technical Task 002+.
+- **Only** documentation and configuration files may be changed in this phase.
+- Keep repository structure **identical** to upstream — no refactoring, no renames, no folder changes.
+
+## Key Files (fork-specific)
+
+| File | Purpose |
+|---|---|
+| `README.md` | Project overview + i18n fork context |
+| `CHANGELOG.md` | Public release history (Keep a Changelog) |
+| `DEVLOG.md` | Internal development notes (optional, not always pushed) |
+| `.github/CONTRIBUTING.md` | Contribution guide with branch workflow & sync instructions |
+| `.github/ISSUE_TEMPLATE/i18n-request.md` | Template for i18n/l10n-specific issues |
+| `.github/PULL_REQUEST_TEMPLATE.md` | PR checklist adapted for this fork |
+
+## Roadmap
+
+| Task | Scope | Status |
+|---|---|---|
+| 001 | Project setup & repository initialization | ✅ Done |
+| 002 | i18n framework & core infrastructure | 🔜 Next |
+| 003 | Locale file format & tooling | ⬜ Planned |
+| 004 | First language pack & community workflow | ⬜ Planned |
+
+## Upstream Sync
+
+```bash
+git fetch upstream
+git checkout trunk
+git merge upstream/trunk
+git checkout develop
+git rebase trunk
+```
+
+Below this line is the original upstream AGENTS.md content — it remains accurate for build, test, lint, architecture, and code style guidance.
+
+---
 
 ## Security Disclosures
 
