@@ -1,0 +1,29 @@
+{
+    "language": "id",
+    "messages": {
+        "Work seamlessly with GitHub from the command line.": "Bekerja dengan mulus bersama GitHub dari baris perintah.",
+        "GitHub CLI": "CLI GitHub",
+        "USAGE": "PENGGUNAAN",
+        "ALIASES": "ALIAS",
+        "CORE COMMANDS": "PERINTAH INTI",
+        "GITHUB ACTIONS COMMANDS": "PERINTAH GITHUB ACTIONS",
+        "EXTENSION COMMANDS": "PERINTAH EKSTENSI",
+        "ADDITIONAL COMMANDS": "PERINTAH TAMBAHAN",
+        "AVAILABLE COMMANDS": "PERINTAH TERSEDIA",
+        "HELP TOPICS": "TOPIK BANTUAN",
+        "FLAGS": "BENDERA",
+        "INHERITED FLAGS": "BENDERA WARISAN",
+        "JSON FIELDS": "BIDANG JSON",
+        "ARGUMENTS": "ARGUMEN",
+        "EXAMPLES": "CONTOH",
+        "ENVIRONMENT VARIABLES": "VARIABEL LINGKUNGAN",
+        "LEARN MORE": "PELAJARI LEBIH LANJUT",
+        "Usage": "Penggunaan",
+        "Available commands:": "Perintah tersedia:",
+        "Core commands": "Perintah inti",
+        "GitHub Actions commands": "Perintah GitHub Actions",
+        "Extension commands": "Perintah ekstensi",
+        "Additional commands": "Perintah tambahan",
+        "Alias commands": "Perintah alias"
+    }
+}

@@ -24,6 +24,7 @@ import (
 	"github.com/cli/cli/v2/internal/config/migration"
 	"github.com/cli/cli/v2/internal/gh"
 	"github.com/cli/cli/v2/internal/gh/ghtelemetry"
+	"github.com/cli/cli/v2/internal/i18n"
 	"github.com/cli/cli/v2/internal/telemetry"
 	"github.com/cli/cli/v2/internal/update"
 	"github.com/cli/cli/v2/pkg/cmd/auth/shared"
@@ -131,7 +132,17 @@ func Main() exitCode {
 
 	cmdFactory := factory.New(buildVersion, string(agents.Detect()), cfgFunc, ioStreams, ghExecutablePath, telemetryService)
 
+	if err := i18n.Init(); err != nil && hasDebug {
+		fmt.Fprintf(stderr, "warning: failed to initialize i18n: %s\n", err)
+	}
+
 	if cfgErr == nil {
+		if _, set := os.LookupEnv("GH_LANG"); !set {
+			if langOpt := cfg.GetOrDefault("", "language"); langOpt.IsSome() {
+				i18n.SetLocale(langOpt.Unwrap().Value)
+			}
+		}
+
 		var m migration.MultiAccount
 		if err := cfg.Migrate(m); err != nil {
 			fmt.Fprintln(stderr, err)

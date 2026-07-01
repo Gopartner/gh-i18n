@@ -1,0 +1,29 @@
+{
+    "language": "en",
+    "messages": {
+        "Work seamlessly with GitHub from the command line.": "Work seamlessly with GitHub from the command line.",
+        "GitHub CLI": "GitHub CLI",
+        "USAGE": "USAGE",
+        "ALIASES": "ALIASES",
+        "CORE COMMANDS": "CORE COMMANDS",
+        "GITHUB ACTIONS COMMANDS": "GITHUB ACTIONS COMMANDS",
+        "EXTENSION COMMANDS": "EXTENSION COMMANDS",
+        "ADDITIONAL COMMANDS": "ADDITIONAL COMMANDS",
+        "AVAILABLE COMMANDS": "AVAILABLE COMMANDS",
+        "HELP TOPICS": "HELP TOPICS",
+        "FLAGS": "FLAGS",
+        "INHERITED FLAGS": "INHERITED FLAGS",
+        "JSON FIELDS": "JSON FIELDS",
+        "ARGUMENTS": "ARGUMENTS",
+        "EXAMPLES": "EXAMPLES",
+        "ENVIRONMENT VARIABLES": "ENVIRONMENT VARIABLES",
+        "LEARN MORE": "LEARN MORE",
+        "Usage": "Usage",
+        "Available commands:": "Available commands:",
+        "Core commands": "Core commands",
+        "GitHub Actions commands": "GitHub Actions commands",
+        "Extension commands": "Extension commands",
+        "Additional commands": "Additional commands",
+        "Alias commands": "Alias commands"
+    }
+}

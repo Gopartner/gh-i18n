@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/MakeNowJust/heredoc"
+	"github.com/cli/cli/v2/internal/i18n"
 	"github.com/cli/cli/v2/internal/text"
 	"github.com/cli/cli/v2/pkg/cmdutil"
 	"github.com/spf13/cobra"
@@ -16,7 +17,7 @@ import (
 )
 
 func rootUsageFunc(w io.Writer, command *cobra.Command) error {
-	fmt.Fprintf(w, "Usage:  %s", command.UseLine())
+	fmt.Fprintf(w, "%s  %s", i18n.T("Usage")+":", command.UseLine())
 
 	var subcommands []*cobra.Command
 	for _, c := range command.Commands() {
@@ -27,7 +28,7 @@ func rootUsageFunc(w io.Writer, command *cobra.Command) error {
 	}
 
 	if len(subcommands) > 0 {
-		fmt.Fprint(w, "\n\nAvailable commands:\n")
+		fmt.Fprint(w, "\n\n"+i18n.T("Available commands:")+"\n")
 		for _, c := range subcommands {
 			fmt.Fprintf(w, "  %s\n", c.Name())
 		}
@@ -36,7 +37,7 @@ func rootUsageFunc(w io.Writer, command *cobra.Command) error {
 
 	flagUsages := command.LocalFlags().FlagUsages()
 	if flagUsages != "" {
-		fmt.Fprintln(w, "\n\nFlags:")
+		fmt.Fprintln(w, "\n\n"+i18n.T("FLAGS")+":")
 		fmt.Fprint(w, text.Indent(dedent(flagUsages), "  "))
 	}
 	return nil
@@ -118,6 +119,9 @@ func rootHelpFunc(f *cmdutil.Factory, command *cobra.Command, _ []string) {
 	if longText == "" {
 		longText = command.Short
 	}
+	if longText != "" {
+		longText = i18n.T(longText)
+	}
 	if longText != "" && command.LocalFlags().Lookup("jq") != nil {
 		longText = strings.TrimRight(longText, "\n") +
 			"\n\nFor more information about output formatting flags, see `gh help formatting`."
@@ -127,10 +131,10 @@ func rootHelpFunc(f *cmdutil.Factory, command *cobra.Command, _ []string) {
 	if longText != "" {
 		helpEntries = append(helpEntries, helpEntry{"", longText})
 	}
-	helpEntries = append(helpEntries, helpEntry{"USAGE", command.UseLine()})
+	helpEntries = append(helpEntries, helpEntry{i18n.T("USAGE"), command.UseLine()})
 
 	if len(command.Aliases) > 0 {
-		helpEntries = append(helpEntries, helpEntry{"ALIASES", strings.Join(BuildAliasList(command, command.Aliases), ", ") + "\n"})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("ALIASES"), strings.Join(BuildAliasList(command, command.Aliases), ", ") + "\n"})
 	}
 
 	// Statically calculated padding for non-extension commands,
@@ -145,7 +149,7 @@ func rootHelpFunc(f *cmdutil.Factory, command *cobra.Command, _ []string) {
 			names = append(names, rpad(c.Name()+":", namePadding)+c.Short)
 		}
 		helpEntries = append(helpEntries, helpEntry{
-			Title: strings.ToUpper(g.Title),
+			Title: i18n.T(strings.ToUpper(g.Title)),
 			Body:  strings.Join(names, "\n"),
 		})
 	}
@@ -162,31 +166,31 @@ func rootHelpFunc(f *cmdutil.Factory, command *cobra.Command, _ []string) {
 			helpTopics = append(helpTopics, rpad(helpTopic.name+":", namePadding)+helpTopic.short)
 		}
 		sort.Strings(helpTopics)
-		helpEntries = append(helpEntries, helpEntry{"HELP TOPICS", strings.Join(helpTopics, "\n")})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("HELP TOPICS"), strings.Join(helpTopics, "\n")})
 	}
 
 	flagUsages := command.LocalFlags().FlagUsages()
 	if flagUsages != "" {
-		helpEntries = append(helpEntries, helpEntry{"FLAGS", dedent(flagUsages)})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("FLAGS"), dedent(flagUsages)})
 	}
 	inheritedFlagUsages := command.InheritedFlags().FlagUsages()
 	if inheritedFlagUsages != "" {
-		helpEntries = append(helpEntries, helpEntry{"INHERITED FLAGS", dedent(inheritedFlagUsages)})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("INHERITED FLAGS"), dedent(inheritedFlagUsages)})
 	}
 	if _, ok := command.Annotations["help:json-fields"]; ok {
 		fields := strings.Split(command.Annotations["help:json-fields"], ",")
-		helpEntries = append(helpEntries, helpEntry{"JSON FIELDS", text.FormatSlice(fields, 80, 0, "", "", true)})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("JSON FIELDS"), text.FormatSlice(fields, 80, 0, "", "", true)})
 	}
 	if _, ok := command.Annotations["help:arguments"]; ok {
-		helpEntries = append(helpEntries, helpEntry{"ARGUMENTS", command.Annotations["help:arguments"]})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("ARGUMENTS"), command.Annotations["help:arguments"]})
 	}
 	if command.Example != "" {
-		helpEntries = append(helpEntries, helpEntry{"EXAMPLES", command.Example})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("EXAMPLES"), command.Example})
 	}
 	if _, ok := command.Annotations["help:environment"]; ok {
-		helpEntries = append(helpEntries, helpEntry{"ENVIRONMENT VARIABLES", command.Annotations["help:environment"]})
+		helpEntries = append(helpEntries, helpEntry{i18n.T("ENVIRONMENT VARIABLES"), command.Annotations["help:environment"]})
 	}
-	helpEntries = append(helpEntries, helpEntry{"LEARN MORE", heredoc.Docf(`
+	helpEntries = append(helpEntries, helpEntry{i18n.T("LEARN MORE"), heredoc.Docf(`
 		Use %[1]sgh <command> <subcommand> --help%[1]s for more information about a command.
 		Read the manual at https://cli.github.com/manual
 		Learn about exit codes using %[1]sgh help exit-codes%[1]s
@@ -267,9 +271,9 @@ func GroupedCommands(cmd *cobra.Command) []CommandGroup {
 		}
 	}
 	if len(cmds) > 0 {
-		defaultGroupTitle := "Additional commands"
+		defaultGroupTitle := i18n.T("Additional commands")
 		if len(cmd.Groups()) == 0 {
-			defaultGroupTitle = "Available commands"
+			defaultGroupTitle = i18n.T("Available commands")
 		}
 		res = append(res, CommandGroup{
 			Title:    defaultGroupTitle,
