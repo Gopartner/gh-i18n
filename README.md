@@ -1,3 +1,26 @@
+# GitHub CLI — Internationalization (i18n) & Localization (l10n) Fork
+
+This repository is a **fork** of the official [GitHub CLI (`cli/cli`)](https://github.com/cli/cli) with the goal of adding **internationalization (i18n)** and **localization (l10n)** support.
+
+**Status:** Project initialization phase. No localization code has been implemented yet.
+
+---
+
+## Project Vision
+
+GitHub CLI currently provides an English-only interface. This project aims to add a localization framework so that `gh` can support multiple languages without changing its behavior, making it accessible to a global audience of developers.
+
+### Roadmap
+
+| Phase | Scope | Status |
+|-------|-------|--------|
+| 001 | Project setup & repository initialization | ✅ Done |
+| 002 | i18n framework & core infrastructure | 🔜 Next |
+| 003 | Locale file format & tooling | ⬜ Planned |
+| 004 | First language pack & community workflow | ⬜ Planned |
+
+---
+
 # GitHub CLI
 
 `gh` is GitHub on the command line. It brings pull requests, issues, and other GitHub concepts to the terminal next to where you are already working with `git` and your code.

@@ -6,3 +6,6 @@ contact_links:
   - name: Ask a question about the GitHub API
     about: Please check out the GitHub community forum for discussions about the GitHub API.
     url: https://github.community/c/github-ecosystem/37
+  - name: i18n/l10n project discussions
+    about: For discussions about internationalization and localization of GitHub CLI.
+    url: https://github.com/Gopartner/gh-i18n/discussions

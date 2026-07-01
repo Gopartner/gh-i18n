@@ -1,90 +1,118 @@
 ## Contributing
 
-Hi! Thanks for your interest in contributing to the GitHub CLI!
+Hi! Thanks for your interest in contributing to the GitHub CLI Internationalization (i18n) & Localization (l10n) project.
 
-We accept pull requests for issues labelled `help wanted`. We encourage issues and discussion posts for all other contributions.
+This project is a fork of the official GitHub CLI with the goal of adding multi-language support. All contributions must remain compatible with the upstream repository.
 
-### Please do:
+---
 
-* Check issues to verify that a [bug][bug issues] or [feature request][feature request issues] issue does not already exist for the same problem or feature
-* Open an issue if things aren't working as expected
-* Open an issue to propose a change
-* Open an issue to propose a design for an issue labelled [`needs-design` and `help wanted`][needs design and help wanted], following the [proposing a design guidelines](#proposing-a-design) instructions below
-* Open an issue to propose a new community supported `gh` package with details about support and redistribution
-* Mention `@cli/code-reviewers` when an issue you want to work on does not have clear Acceptance Criteria
-* Open a pull request for any issue labelled [`help wanted`][hw] and [`good first issue`][gfi]
-
-### Please _do NOT_:
-
-* Open a pull request for issues without the `help wanted` label or explicit Acceptance Criteria
-* Expand pull request scope to include changes that are not described in the issue's Acceptance Criteria
-* Open pull requests for any issue marked `core`. These issues require additional context from
-  the core CLI team at GitHub and any external pull requests will not be accepted
-
-## Building the project
+### Development Environment
 
 Prerequisites:
 - Go 1.26+
+- Git 2.30+
+- A GitHub account
 
 Build with:
-* Unix-like systems: `make`
-* Windows: `go run script/build.go`
+- Unix-like systems: `make`
+- Windows: `go run script/build.go`
 
 Run the new binary as:
-* Unix-like systems: `bin/gh`
-* Windows: `bin\gh`
+- Unix-like systems: `bin/gh`
+- Windows: `bin\gh`
 
 Run tests with: `go test ./...`
 
-See [project layout documentation](../docs/project-layout.md) for information on where to find specific source files.
+---
 
-## Submitting a pull request
+### Branch Workflow
 
-1. Create a new branch: `git checkout -b my-branch-name`
-1. Make your change, add tests, and ensure tests pass
-1. Submit a pull request: `gh pr create --web`
+We follow a simple branching strategy:
 
-Contributions to this project are [released][legal] to the public under the [project's open source license][license].
+- `trunk` — Mirrors the upstream `cli/cli` `trunk` branch. Do not commit directly here.
+- `develop` — Base branch for all feature development. All new work branches from and merges into `develop`.
 
-Please note that this project adheres to a [Contributor Code of Conduct][code-of-conduct]. By participating in this project you agree to abide by its terms.
+Feature branches use the pattern: `feature/<short-description>` or `fix/<short-description>`.
 
-We generate manual pages from source on every release. You do not need to submit pull requests for documentation specifically; manual pages for commands will automatically get updated after your pull requests gets accepted.
+---
 
-## Design guidelines
+### Syncing with Upstream
 
-### Proposing a design
+To keep your fork in sync with the official GitHub CLI repository:
 
-You may propose a design to solve an open bug or feature request issue that has both [the `needs-design` and `help-wanted` labels][needs design and help wanted].
+```bash
+# Fetch upstream changes
+git fetch upstream
 
-To propose a design:
+# Update trunk (mirror of upstream)
+git checkout trunk
+git merge upstream/trunk
 
-- Open a new issue using the [design proposal issue template](./ISSUE_TEMPLATE/submit-a-design-proposal.md).
-- Include a link to the issue that the design is for.
-- Describe the design you are proposing to resolve the issue, leveraging the [CLI Design System][].
-- Mock up the design you are proposing using our [Google Docs Template][] or code blocks.
-  - Mock ups should clearly illustrate the command(s) being run and the expected output(s).
+# Rebase develop on trunk
+git checkout develop
+git rebase trunk
+```
 
-### (core team only) Reviewing a design
+---
 
-A member of the core team will [triage](../docs/triage.md) the design proposal. Once a member of the core team has reviewed the design, they may add the [`help wanted`][hw] label to the issue, so a PR can be opened to provide the implementation.
+### Submitting a Pull Request
 
-## Resources
+1. Create a new branch from `develop`:
+   ```bash
+   git checkout -b feature/my-feature develop
+   ```
+2. Make your change, add tests, and ensure tests pass:
+   ```bash
+   go test ./...
+   ```
+3. Keep your branch updated:
+   ```bash
+   git fetch upstream
+   git rebase upstream/trunk
+   ```
+4. Submit a pull request against the `develop` branch:
+   ```bash
+   gh pr create --base develop
+   ```
 
-- [How to Contribute to Open Source][]
-- [Using Pull Requests][]
-- [GitHub Help][]
+### Pull Request Checklist
 
+Before submitting your PR:
+- [ ] Code compiles without errors (`go build` or `make`)
+- [ ] Tests pass (`go test ./...`)
+- [ ] No lint warnings (`make lint`)
+- [ ] Branch is up to date with `develop`
+- [ ] Commit messages are clear and descriptive
+- [ ] Changes do not break compatibility with upstream
 
-[bug issues]: https://github.com/cli/cli/issues?q=is%3Aopen+is%3Aissue+label%3Abug
-[needs design and help wanted]: https://github.com/cli/cli/issues?q=state%3Aclosed%20is%3Aissue%20label%3Aneeds-design%20label%3A%22help%20wanted%22
-[feature request issues]: https://github.com/cli/cli/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement
-[hw]: https://github.com/cli/cli/labels/help%20wanted
-[gfi]: https://github.com/cli/cli/labels/good%20first%20issue
-[legal]: https://docs.github.com/en/free-pro-team@latest/github/site-policy/github-terms-of-service#6-contributions-under-repository-license
-[license]: ../LICENSE
-[code-of-conduct]: ./CODE-OF-CONDUCT.md
-[How to Contribute to Open Source]: https://opensource.guide/how-to-contribute/
-[Using Pull Requests]: https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests
-[GitHub Help]: https://docs.github.com/
-[CLI Design System]: /docs/primer/
-[Google Docs Template]: https://docs.google.com/document/d/1JIRErIUuJ6fTgabiFYfCH3x91pyHuytbfa0QLnTfXKM/edit#heading=h.or54sa47ylpg
+---
+
+### Coding Style
+
+- Follow the existing code style of the project
+- Use `gofmt` / `go fmt` before committing
+- Run `make lint` (golangci-lint) before submitting a PR
+- Add godoc comments to all exported functions, types, and constants
+
+---
+
+### Issue Templates
+
+Please use the appropriate template when filing issues:
+- [Bug report](.github/ISSUE_TEMPLATE/bug_report.md)
+- [Feature request](.github/ISSUE_TEMPLATE/submit-a-request.md)
+- [i18n/l10n specific request](.github/ISSUE_TEMPLATE/i18n-request.md)
+
+---
+
+### Code of Conduct
+
+Please note that this project adheres to a [Contributor Code of Conduct](./CODE-OF-CONDUCT.md). By participating in this project you agree to abide by its terms.
+
+### Resources
+
+- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
+- [Using Pull Requests](https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/about-pull-requests)
+- [GitHub Help](https://docs.github.com/)
+
+Contributions to this project are [released](https://docs.github.com/en/free-pro-team@latest/github/site-policy/github-terms-of-service#6-contributions-under-repository-license) to the public under the [project's open source license](../LICENSE).
